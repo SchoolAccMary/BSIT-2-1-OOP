@@ -1,9 +1,10 @@
 import java.util.Scanner;
 
-public class Main {
+public class act_1 {
 
     public static final int MAX_STUDENTS = 10;
-    public static long[] studentID = new long[MAX_STUDENTS];
+
+    public static int[] studentID = new int[MAX_STUDENTS];
     public static String[] fullNames = new String[MAX_STUDENTS];
     public static int[] ages = new int[MAX_STUDENTS];
     public static String[] courses = new String[MAX_STUDENTS];
@@ -43,10 +44,11 @@ public class Main {
             }
             System.out.println();
         }
+
         sc.close();
     }
 
-    private static void printMenu() {
+    public static void printMenu() {
         System.out.println("===== STUDENT INFORMATION SYSTEM =====");
         System.out.println("[1] Add Student");
         System.out.println("[2] View All Students");
@@ -55,14 +57,15 @@ public class Main {
         System.out.println("[5] Exit");
     }
 
-    private static void addStudent() {
+    public static void addStudent() {
         if (studentCount >= MAX_STUDENTS) {
             System.out.println(">> Student list is full. Cannot add more records.");
             return;
         }
 
-        long id = readLong("Enter ID: ");
-        sc.nextLine();
+        System.out.print("Enter ID: ");
+        int id = sc.nextInt();
+        sc.nextLine(); // consume leftover newline
 
         System.out.print("Enter Full Name: ");
         String name = sc.nextLine();
@@ -71,7 +74,7 @@ public class Main {
         int age = sc.nextInt();
 
         System.out.print("Enter Course: ");
-        sc.nextLine();
+        sc.nextLine(); // consume leftover newline
         String course = sc.nextLine();
 
         System.out.print("Enter Grade: ");
@@ -79,12 +82,13 @@ public class Main {
 
         System.out.print("Is the student enrolled? (true/false): ");
         boolean isEnrolled = sc.nextBoolean();
-        sc.nextLine();
+        sc.nextLine(); // consume leftover newline
 
         if (age <= 0 || grade < 0 || grade > 100) {
             System.out.println(">> Invalid age/grade. Age must be positive. Grade must be between 0 and 100. Student not added.");
             return;
         }
+
         studentID[studentCount] = id;
         fullNames[studentCount] = name;
         ages[studentCount] = age;
@@ -92,19 +96,22 @@ public class Main {
         grades[studentCount] = grade;
         enrolledStatus[studentCount] = isEnrolled;
         studentCount++;
+
         System.out.println(">> Student added successfully!");
     }
 
-    private static void viewAllStudents() {
+    public static void viewAllStudents() {
         if (studentCount == 0) {
             System.out.println(">> No records yet. Add a student first.");
             return;
         }
+
         System.out.println("--- STUDENT RECORDS ---");
-        System.out.printf("%-15s%-25s%-15s%-15s%-15s%-15s%n",
+        System.out.printf("%-6s%-15s%-6s%-10s%-8s%-15s%n",
                 "ID", "NAME", "AGE", "COURSE", "GRADE", "STANDING");
+
         for (int i = 0; i < studentCount; i++) {
-            System.out.printf("%-15d%-25s%-15d%-15s%-15.2f%-15s%n",
+            System.out.printf("%-6d%-15s%-6d%-10s%-8.2f%-15s%n",
                     studentID[i], fullNames[i], ages[i], courses[i], grades[i], standing(grades[i]));
         }
     }
@@ -113,8 +120,8 @@ public class Main {
         return g >= 90 ? "Dean's Lister" : g >= 75 ? "Passed" : "Failed";
     }
 
-    private static void searchStudentById() {
-        long searchId = readLong("Enter ID to search: ");
+    public static void searchStudentById() {
+        int searchId = readInt("Enter ID to search: ");
         boolean found = false;
 
         for (int i = 0; i < studentCount; i++) {
@@ -135,7 +142,7 @@ public class Main {
         }
     }
 
-    private static void viewStatistics() {
+    public static void viewStatistics() {
         if (studentCount == 0) {
             System.out.println(">> No records yet. Add a student first.");
             return;
@@ -165,17 +172,6 @@ public class Main {
             System.out.print(prompt);
         }
         int value = sc.nextInt();
-        return value;
-    }
-
-    public static long readLong(String prompt) {
-        System.out.print(prompt);
-        while (!sc.hasNextLong()) {
-            System.out.println(">> Please enter a valid number.");
-            sc.next();
-            System.out.print(prompt);
-        }
-        long value = sc.nextLong();
         return value;
     }
 }
