@@ -107,7 +107,7 @@ public class GradeTracker {
                 }
                 return grade;
             } catch (InputMismatchException e) {
-                input.next(); // clear the bad token
+                input.next();
                 System.out.println("Grades must be numbers. Try again.");
             }
         }
@@ -120,8 +120,6 @@ public class GradeTracker {
         }
 
         System.out.println("--- Class Roster ---");
-        // for-each reads as "for each Student s in roster" — use it
-        // whenever you just need to look at every item in the list.
         for (Student s : roster) {
             System.out.println(s.getName() + ": " + s.getGrade()
                     + " (" + letterFor(s.getGrade()) + ")");
